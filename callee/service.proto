@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package grpc_go_connection_demo.callee;
+
+option go_package = "github.com/110y/grpc-go-connection-demo/callee";
+
+service CalleeService {
+  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+}
+
+message GetItemRequest {
+  string id = 1;
+}
+
+message GetItemResponse {
+  string name = 1;
+}
