@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package grpc_go_connection_demo.caller;
 
-option go_package = "github.com/110y/grpc-go-connection-demo/caller";
+option go_package = "github.com/110y/grpc-go-connection-demo/caller/pb";
 
 service CallerService {
   rpc GetItem(GetItemRequest) returns (GetItemResponse);

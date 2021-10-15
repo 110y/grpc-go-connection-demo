@@ -35,5 +35,5 @@ pb:
 .PHONY: gen-proto
 gen-proto: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC)
 	$(BUF) generate \
-		--path ./caller/ \
-		--path ./callee/
+		--path ./caller/pb \
+		--path ./callee/pb
