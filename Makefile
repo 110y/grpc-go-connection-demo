@@ -53,4 +53,4 @@ gen-proto: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC)
 
 .PHONY: show-caller-channel
 show-caller-channel: $(CHANNELZCLI)
-	 $(CHANNELZCLI) -k --addr localhost:5000 ls channel
+	 @$(CHANNELZCLI) -k --addr localhost:5000 ls channel
