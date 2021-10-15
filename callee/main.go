@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/110y/run"
 	"google.golang.org/grpc"
@@ -16,7 +18,11 @@ var _ pb.CalleeServiceServer = (*server)(nil)
 
 func main() {
 	run.Run(func(ctx context.Context) int {
-		s := newServer()
+		s, err := newServer()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to create the server: %s", err)
+			return 1
+		}
 
 		if err := s.Start(ctx); err != nil {
 			fmt.Fprintf(os.Stderr, "failed to start or stop the server: %s", err)
@@ -27,11 +33,22 @@ func main() {
 	})
 }
 
-func newServer() *pkggrpc.Server {
+func newServer() (*pkggrpc.Server, error) {
 	s := &server{}
-	return pkggrpc.NewServer(5000, func(gs *grpc.Server) {
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		return nil, errors.New("must specify PORT")
+	}
+
+	portnum, err := strconv.Atoi(port)
+	if err != nil {
+		return nil, errors.New("must specify valid PORT as number")
+	}
+
+	return pkggrpc.NewServer(portnum, func(gs *grpc.Server) {
 		pb.RegisterCalleeServiceServer(gs, s)
-	})
+	}), nil
 }
 
 type server struct {
