@@ -1,0 +1,13 @@
+---
+version: "3.8"
+
+services:
+
+  callee:
+    image: golang:1.17.1-bullseye
+    ports:
+      - ${CALLEE_PORT}:5000
+    volumes:
+      - .:/go/src/github.com/110y/grpc-go-connection-demo:cached
+    working_dir: /go/src/github.com/110y/grpc-go-connection-demo
+    command: go run ./callee
